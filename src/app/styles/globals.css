@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+#messages {
+  height: 200px;
+  background-color: #eee;
+  font-size: 12px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+input {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
