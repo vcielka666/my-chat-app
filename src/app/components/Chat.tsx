@@ -90,7 +90,7 @@ const Chat: React.FC = () => {
         </div>
         <div className="col-md-4">
           <h6>Users</h6>
-          <UserList users={state.users} typingUsers={state.typingUsers} />
+          <UserList users={state.users} typingUsers={state.typingUsers} currentUser={usernameRef.current} />
         </div>
       </div>
     </div>
