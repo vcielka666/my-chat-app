@@ -1,0 +1,50 @@
+                            TOXIK 
+
+- fun app focused on toxic energy. Purpose of this application is to channel out
+frustrated emotions, toxic vibes and hatefulness. All participants consensually 
+agree on the rules and the toxic enviroment of the platform. We believe that human
+toxic energies are surpressed and not well proccesed emotions and thoughts from negative
+experienece and struggless of life. This app is safe-space and is absolutely non 
+politicaly correct focused. Everyone can express any kind of hatefull or negative
+comments on anyone and anything without any persecusion. This is the main goal of the
+application, that serve as channel to express the negative manifestation of ones life 
+in save-space for them and everyones accept that way without any negativity
+and saddness - that is one of the rule of the TOXIK platform.
+This app has no intention for creating and building
+up any hateful groups or individuals to comment out on other social platform,
+quite the opositte, this is the platform that trying to connect and group all
+the internet trolls to clean out of normal and nice behaved social platform.
+
+Applied:
+
+User either create account or can quick connect.Connected users can 
+write messages of any kind or just can observe other users chatting and hating each
+other.Observers can rate the commenting users and win troll perks or troll points.
+Every created account(not quick connceted) owns Troll Perks and Troll Points.
+Every chat-room a.k.a BEEFROOM has timer that is set to 3 minutes a round.During this
+time the connected users are trying to hate and trigger each-other, every sent message
+has cooldown 5 seconds.The sent messages can be rated and the highest rated message gets
+troll points, which are xp points to get higher level and improve your perks.Troll points
+are also used to cast perks at users targets.
+Users can use perks to trigger the oposittion. 
+They have: 
+
+Throw Ad - targeted user has to watch quick advertisement and meanwhile other user can 
+write anything permanently into his profile and make them look like loosers.
+
+Ad Block- is hidden perk(none can see who has it), that blocks Throw Ad and at the same time advertisement
+is used at user who first throwed ad.
+
+FastTouch/Click - competition, 5 second clicking bar, the winner who clicks highest 
+score wins 2 troll xp points.
+
+Rock Paper Scissors - 5 second match of famouse game Rock Paper Scissors, winner gets 2 troll points.
+
+Clean yourself - Delete toxic perma texts from your profile.Cost you 25 troll points
+
+Users can create beefrooms, can make teams, maximum 3v3.
+Beefrooms has hateful tags to filter and search from them.
+Teams are created by team tags.
+Users can join random beefrooms or filter it by tags.
+Users set their primary language when they create account and by this language tag
+are filtered the beefrooms for them.

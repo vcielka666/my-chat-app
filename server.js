@@ -45,6 +45,16 @@ app.prepare().then(() => {
       socket.broadcast.emit('typing', { user, text });
     });
 
+    // Handle the 'start' event for the Fast Click Match game
+    socket.on('start', () => {
+      io.emit('start');
+    });
+
+    // Handle the 'click' event for the Fast Click Match game
+    socket.on('click', (data) => {
+      io.emit('click', data);
+    });
+
     socket.on('disconnect', () => {
       console.log('User disconnected:', socket.data.username || 'Unknown');
       connectedUsers.delete(socket.id);
