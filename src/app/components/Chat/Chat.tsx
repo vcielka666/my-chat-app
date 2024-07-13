@@ -1,5 +1,4 @@
 "use client"
-
 import React, { useEffect, useState, useRef } from 'react';
 import { useChatContext } from './../../store';
 import { socket, connectSocket, sendMessage, onMessage, onUserConnected, onUserDisconnected, onSetUsers, onTyping } from '../../services/socket';
@@ -134,7 +133,7 @@ const Chat: React.FC = () => {
         </div>
 
         <div style={{ position: "relative" }} className={styles.Beefroom_Field}>
-          {startFastClickMatch && <FastClickMatch />}
+          <FastClickMatch />
           <MessageList messages={state.messages} />
         </div>
         <div className={styles.Users_Field}>

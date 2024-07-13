@@ -10,7 +10,10 @@ const FastClickMatch: React.FC = () => {
   const [yourClicks, setYourClicks] = useState(0);
   const [theirClicks, setTheirClicks] = useState(0);
   const [timer, setTimer] = useState(5);
+  const [preGameTimer, setPreGameTimer] = useState(3);
   const [gameStarted, setGameStarted] = useState(false);
+  const [preGameStarted, setPreGameStarted] = useState(false);
+  const [gameEnded, setGameEnded] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -21,11 +24,13 @@ const FastClickMatch: React.FC = () => {
     });
 
     socket.on('start', () => {
-      setGameStarted(true);
+      setPreGameStarted(true);
+      setGameEnded(false);
+      setPreGameTimer(3);
       setTimer(5);
       setYourClicks(0);
       setTheirClicks(0);
-      startTimer();
+      startPreGameTimer();
     });
 
     return () => {
@@ -37,12 +42,33 @@ const FastClickMatch: React.FC = () => {
     };
   }, []);
 
+  const startPreGameTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    timerRef.current = setInterval(() => {
+      setPreGameTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current as NodeJS.Timeout);
+          setPreGameStarted(false);
+          setGameStarted(true);
+          startTimer();
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
   const startTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
     timerRef.current = setInterval(() => {
       setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(timerRef.current as NodeJS.Timeout);
           setGameStarted(false);
+          setGameEnded(true);
         }
         return prev - 1;
       });
@@ -54,24 +80,28 @@ const FastClickMatch: React.FC = () => {
       const newClickCount = yourClicks + 1;
       setYourClicks(newClickCount);
       socket.emit('click', { id: socket.id, clicks: newClickCount });
-    } else {
-      // Start the game when the image is clicked for the first time
-      startGame();
     }
   };
 
   const startGame = () => {
-    socket.emit('start');
+    if (!gameStarted && !preGameStarted && !gameEnded) {
+      socket.emit('start');
+    }
   };
 
   return (
     <div className={styles.wrapper_FastClickMatch}>
+      {preGameStarted && (
+        <div className={styles.preGameTimer}>
+          GET READY IN... {preGameTimer}
+        </div>
+      )}
       {gameStarted && (
         <>
           <div className={styles.timer}>Time: {timer}s</div>
         </>
       )}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative' }} onClick={startGame}>
         <img
           onClick={incrementYourClicks}
           className="theme_IMG"
