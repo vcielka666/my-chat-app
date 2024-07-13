@@ -24,10 +24,10 @@ const Perks: React.FC<PerksProps> = ({ userPerks, onStartFastClickMatch }) => {
           <div className={styles.perkDetails}>
             <p style={{ display: "none" }}>{perk.name}</p>
             <p style={{ display: "none" }}>{perk.description}</p>
-            <p>Owned: {userPerks[perk.id] || 0}</p> {/* Display the number of perks owned */}
+            <p className='text-red-800'>Owned: {userPerks[perk.id] || 0}</p> {/* Display the number of perks owned */}
           </div>
         </div>
-      ))}
+      ))};
     </div>
   );
 };

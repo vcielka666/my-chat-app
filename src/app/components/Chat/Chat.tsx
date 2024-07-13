@@ -8,7 +8,7 @@ import Perks from '../Perks/Perks';
 import TrollXpBox from '../TrollXpBox';
 import FastClickMatch from '../Perks/FastClickMatch/FastClickMatch';
 import styles from "./Chat.module.css";
-
+import { Button } from '@/app/components/ui/button';
 const Chat: React.FC = () => {
   const { state, dispatch } = useChatContext();
   const [message, setMessage] = useState('');
@@ -123,7 +123,7 @@ const Chat: React.FC = () => {
                 value={message}
                 onChange={handleInputChange}
               />
-              <button className="btn btn-primary" type="submit">Send</button>
+              <Button variant="ghost" type="submit">Send</Button>
             </div>
           </form>
           <div className={styles.Perks_Wrapper}>

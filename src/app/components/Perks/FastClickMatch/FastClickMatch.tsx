@@ -14,6 +14,7 @@ const FastClickMatch: React.FC = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [preGameStarted, setPreGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
+  const [finalYourClicks, setFinalYourClicks] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const FastClickMatch: React.FC = () => {
           clearInterval(timerRef.current as NodeJS.Timeout);
           setGameStarted(false);
           setGameEnded(true);
+          setFinalYourClicks(yourClicks); // Set final score
         }
         return prev - 1;
       });
@@ -108,24 +110,43 @@ const FastClickMatch: React.FC = () => {
           alt="beefroom_theme_img"
           onClick={incrementYourClicks}
         />
-        <p
-          className={styles.clickCount}
-          style={{
-            position: 'absolute',
-            top: '41%',
-            left: '50%',
-            transform: 'translateX(-44%) translateY(-50%)',
-            fontSize: '2.8rem',
-          }}
-          onClick={incrementYourClicks}
-        >
-          {yourClicks}
-        </p>
+        {gameStarted && (
+          <p
+            className={styles.clickCount}
+            style={{
+              position: 'absolute',
+              top: '41%',
+              left: '50%',
+              transform: 'translateX(-44%) translateY(-50%)',
+              fontSize: '2.8rem',
+              fontWeight: "bold"
+            }}
+            onClick={incrementYourClicks}
+          >
+            {yourClicks}
+          </p>
+        )}
       </div>
-      <div>
-        <p>Their Clicks: {theirClicks}</p>
-      </div>
-      <h6>BEEFROOM #123</h6>
+      {(gameStarted || gameEnded) && (
+        <>
+          <div className="absolute left-0 m-0 mx-3 text-base">
+            <p>Your Score</p>
+            <p className="text-2xl text-green-500 text-center">
+              {gameEnded ? yourClicks : yourClicks}
+            </p>
+          </div>
+          <div className="absolute right-0 m-0 mx-3 text-base">
+            <p>Their Score</p>
+            <p className="text-2xl text-red-500 text-center">{theirClicks}</p>
+          </div>
+        </>
+      )}
+      {!gameStarted && !preGameStarted && !gameEnded && (
+        <h6>BEEFROOM #123</h6>
+      )}
+      {gameEnded && (
+        <h6>BEEFROOM #123</h6>
+      )}
     </div>
   );
 };
