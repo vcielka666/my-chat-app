@@ -14,7 +14,6 @@ const FastClickMatch: React.FC = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [preGameStarted, setPreGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
-  const [finalYourClicks, setFinalYourClicks] = useState<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -70,7 +69,6 @@ const FastClickMatch: React.FC = () => {
           clearInterval(timerRef.current as NodeJS.Timeout);
           setGameStarted(false);
           setGameEnded(true);
-          setFinalYourClicks(yourClicks); // Set final score
         }
         return prev - 1;
       });
@@ -127,20 +125,16 @@ const FastClickMatch: React.FC = () => {
           </p>
         )}
       </div>
-      {(gameStarted || gameEnded) && (
-        <>
-          <div className="absolute left-0 m-0 mx-3 text-base">
-            <p>Your Score</p>
-            <p className="text-2xl text-green-500 text-center">
+      <div className="absolute left-0 m-0 mx-3 text-base">
+        <p>Your Score</p>
+        <p className="text-2xl text-green-500 text-center">
               {gameEnded ? yourClicks : yourClicks}
             </p>
-          </div>
-          <div className="absolute right-0 m-0 mx-3 text-base">
-            <p>Their Score</p>
-            <p className="text-2xl text-red-500 text-center">{theirClicks}</p>
-          </div>
-        </>
-      )}
+      </div>
+      <div className="absolute right-0 m-0 mx-3 text-base">
+        <p>Their Score</p>
+        <p className="text-2xl text-red-500 text-center">{theirClicks}</p>
+      </div>
       {!gameStarted && !preGameStarted && !gameEnded && (
         <h6>BEEFROOM #123</h6>
       )}
