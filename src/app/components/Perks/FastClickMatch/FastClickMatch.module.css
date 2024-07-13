@@ -10,3 +10,13 @@
     align-items: center;
     border-radius: 4px;
   }
+
+  .theme_IMG {
+    cursor: pointer;
+    user-select: none; 
+  }
+  
+  .clickCount {
+    transition: all 0.3s ease;
+    user-select: none;
+  }

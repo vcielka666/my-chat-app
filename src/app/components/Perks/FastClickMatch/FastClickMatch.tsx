@@ -103,13 +103,13 @@ const FastClickMatch: React.FC = () => {
       )}
       <div style={{ position: 'relative' }} onClick={startGame}>
         <img
-          onClick={incrementYourClicks}
           className="theme_IMG"
           src="/images/troll_BG.png"
           alt="beefroom_theme_img"
+          onClick={incrementYourClicks}
         />
         <p
-          onClick={incrementYourClicks}
+          className={styles.clickCount}
           style={{
             position: 'absolute',
             top: '41%',
@@ -117,6 +117,7 @@ const FastClickMatch: React.FC = () => {
             transform: 'translateX(-44%) translateY(-50%)',
             fontSize: '2.8rem',
           }}
+          onClick={incrementYourClicks}
         >
           {yourClicks}
         </p>
