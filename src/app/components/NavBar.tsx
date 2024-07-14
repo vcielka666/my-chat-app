@@ -6,7 +6,7 @@ import styles from './NavBar.module.css';
 const NavBar = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.h1}>TOXIK</h1>
+      <h1 className={styles.h1}>TOXIK - your favourite trolling app</h1>
       <ThemeToggleButton />
     </div>
   );

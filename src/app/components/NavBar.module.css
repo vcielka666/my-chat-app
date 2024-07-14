@@ -2,10 +2,22 @@
     text-align: center;
     position: relative;
     height: fit-content;
-    z-index: 99999;
+    display: flex;
+    justify-content: space-around;
+    background-color: #e5e7eb;
+    align-items: center;
 }
 
 .h1 {
     text-align: center;
-    background-color: red;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 0px 4px;
+}
+
+@media only screen and (max-width:600px) {
+    .container{
+        display: none;
+    }
 }

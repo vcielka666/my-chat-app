@@ -1,15 +1,22 @@
+// FastClickMatch.js
+
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
+import classNames from 'classnames';
 import styles from './FastClickMatch.module.css';
 
 const socket = io('http://localhost:3000', {
   path: '/api/socket'
 });
 
-const FastClickMatch: React.FC = () => {
+interface FastClickMatchProps {
+  onGameStart: (started: boolean) => void;
+}
+
+const FastClickMatch: React.FC<FastClickMatchProps> = ({ onGameStart }) => {
   const [yourClicks, setYourClicks] = useState(0);
   const [theirClicks, setTheirClicks] = useState(0);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(125);
   const [preGameTimer, setPreGameTimer] = useState(3);
   const [gameStarted, setGameStarted] = useState(false);
   const [preGameStarted, setPreGameStarted] = useState(false);
@@ -27,7 +34,7 @@ const FastClickMatch: React.FC = () => {
       setPreGameStarted(true);
       setGameEnded(false);
       setPreGameTimer(3);
-      setTimer(5);
+      setTimer(125);
       setYourClicks(0);
       setTheirClicks(0);
       startPreGameTimer();
@@ -52,6 +59,7 @@ const FastClickMatch: React.FC = () => {
           clearInterval(timerRef.current as NodeJS.Timeout);
           setPreGameStarted(false);
           setGameStarted(true);
+          onGameStart(true); // Notify parent component
           startTimer();
         }
         return prev - 1;
@@ -68,6 +76,7 @@ const FastClickMatch: React.FC = () => {
         if (prev <= 1) {
           clearInterval(timerRef.current as NodeJS.Timeout);
           setGameStarted(false);
+          onGameStart(false); // Notify parent component
           setGameEnded(true);
         }
         return prev - 1;
@@ -93,7 +102,9 @@ const FastClickMatch: React.FC = () => {
     <div className={styles.wrapper_FastClickMatch}>
       {preGameStarted && (
         <div className={styles.preGameTimer}>
-          GET READY IN... {preGameTimer}
+          <p className={classNames(styles.clickCount, 'animate__animated', 'animate__heartBeat', 'animate__flash', 'animate__slower')}>
+            GET READY IN... {preGameTimer}
+          </p>
         </div>
       )}
       {gameStarted && (
@@ -101,40 +112,40 @@ const FastClickMatch: React.FC = () => {
           <div className={styles.timer}>Time: {timer}s</div>
         </>
       )}
-      <div style={{ position: 'relative' }} onClick={startGame}>
+      <div
+        style={{ position: 'relative' }}
+        className={gameStarted ? styles.theme_IMG_ACTIVE : ''}
+        onClick={startGame}
+      >
         <img
-          className="theme_IMG"
+          className={classNames(styles.theme_IMG, { [styles.theme_IMG_ACTIVE]: gameStarted })}
           src="/images/troll_BG.png"
           alt="beefroom_theme_img"
           onClick={incrementYourClicks}
         />
         {gameStarted && (
           <p
-            className={styles.clickCount}
-            style={{
-              position: 'absolute',
-              top: '41%',
-              left: '50%',
-              transform: 'translateX(-44%) translateY(-50%)',
-              fontSize: '2.8rem',
-              fontWeight: "bold"
-            }}
+            className={styles.clickCountInGame}
             onClick={incrementYourClicks}
           >
             {yourClicks}
           </p>
         )}
       </div>
-      <div className="absolute left-0 m-0 mx-3 text-base">
-        <p>Your Score</p>
-        <p className="text-2xl text-green-500 text-center">
-              {gameEnded ? yourClicks : yourClicks}
+      {(gameStarted || gameEnded) && (
+        <>
+          <div className="absolute left-0 m-0 mx-3 text-base">
+            <p>Your Score</p>
+            <p className="text-2xl text-green-500 text-center">
+              {yourClicks}
             </p>
-      </div>
-      <div className="absolute right-0 m-0 mx-3 text-base">
-        <p>Their Score</p>
-        <p className="text-2xl text-red-500 text-center">{theirClicks}</p>
-      </div>
+          </div>
+          <div className="absolute right-0 m-0 mx-3 text-base">
+            <p>Their Score</p>
+            <p className="text-2xl text-red-500 text-center">{theirClicks}</p>
+          </div>
+        </>
+      )}
       {!gameStarted && !preGameStarted && !gameEnded && (
         <h6>BEEFROOM #123</h6>
       )}

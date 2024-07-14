@@ -1,4 +1,5 @@
-"use client"
+// Chat.js
+
 import React, { useEffect, useState, useRef } from 'react';
 import { useChatContext } from './../../store';
 import { socket, connectSocket, sendMessage, onMessage, onUserConnected, onUserDisconnected, onSetUsers, onTyping } from '../../services/socket';
@@ -9,6 +10,7 @@ import TrollXpBox from '../TrollXpBox';
 import FastClickMatch from '../Perks/FastClickMatch/FastClickMatch';
 import styles from "./Chat.module.css";
 import { Button } from '@/app/components/ui/button';
+
 const Chat: React.FC = () => {
   const { state, dispatch } = useChatContext();
   const [message, setMessage] = useState('');
@@ -19,11 +21,12 @@ const Chat: React.FC = () => {
   const [trollPoints, setTrollPoints] = useState(50);
   const [nextLevelXp, setNextLevelXp] = useState(1250);
   const [startFastClickMatch, setStartFastClickMatch] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); // New state for game started status
 
   useEffect(() => {
     if (!usernameRef.current) {
       let username = prompt('What is your username?') || 'Anonymous';
-      let teamTag = prompt('Optionally set your team-tag(e.g. #yourMumGangbanged)');
+      let teamTag = prompt('Optionally set your team-tag');
       while (!username || username.trim() === "") {
         username = prompt('What is your username? (Username cannot be empty)') || 'Anonymous';
       }
@@ -64,7 +67,8 @@ const Chat: React.FC = () => {
         2: 10,
         3: 10,
         4: 10,
-        5: 10
+        5: 10,
+        6: 10
       };
       setUserPerks(fetchedPerks);
     }, 1000); // Simulate a network delay
@@ -102,29 +106,36 @@ const Chat: React.FC = () => {
 
   const handleStartFastClickMatch = () => {
     setStartFastClickMatch(true);
+    setGameStarted(true); // Set gameStarted to true immediately
     socket.emit('start');
+  };
+
+  const handleGameStart = (started: boolean) => {
+    setGameStarted(started);
   };
 
   return (
     <div className="container">
       <div className={styles.sub_container}>
         <div className={styles.Input_Field}>
-          <h5>Your input field</h5>
+          <h5>Input field</h5>
           <div className={styles.info}>
             <p>Account:<span style={{ color: "#2e5230", fontWeight: "normal" }}>{usernameRef.current}</span> </p>
             <p>Team:<span style={{ color: "#2e5230", fontWeight: "normal" }}>{teamTagRef.current}</span></p>
             <p>Level:<span style={{ color: "#2e5230", fontWeight: "normal" }}>80</span></p>
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="input-group">
+           {!gameStarted && <div className="input-group">
               <textarea
                 onKeyDown={handlePressEnter}
                 className={styles.textarea}
                 value={message}
                 onChange={handleInputChange}
+                placeholder='your troll-craft . . .'
               />
               <Button variant="ghost" type="submit">Send</Button>
             </div>
+            }
           </form>
           <div className={styles.Perks_Wrapper}>
             <Perks userPerks={userPerks} onStartFastClickMatch={handleStartFastClickMatch} />
@@ -133,8 +144,8 @@ const Chat: React.FC = () => {
         </div>
 
         <div style={{ position: "relative" }} className={styles.Beefroom_Field}>
-          <FastClickMatch />
-          <MessageList messages={state.messages} />
+          <FastClickMatch onGameStart={handleGameStart} />
+          {!gameStarted && <MessageList messages={state.messages} />} {/* Conditionally render MessageList */}
         </div>
         <div className={styles.Users_Field}>
           <h5>Your targets</h5>

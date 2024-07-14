@@ -1,10 +1,25 @@
-.Perks{
-    display: flex;
-    flex-direction: column;
-    margin: 5px;
-    background-color: #fff7cc;
-  }
-  
+.Perks {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  background-color: #fff7cc;
+}
+
 .Perks p {
-    margin: 2px;
-  }
+  margin: 2px;
+}
+
+.perks_Container {
+  margin: 1px 4px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.perk {
+  margin: 5px;
+}
+
+.perkDetails {
+  text-align: center;
+}
