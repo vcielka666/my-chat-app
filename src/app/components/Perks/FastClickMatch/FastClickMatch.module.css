@@ -14,22 +14,28 @@
     top: 20px;
     position: relative;
   }
-.theme_IMG {
+  .theme_IMG {
     cursor: pointer;
     user-select: none; 
     width: 120px;
     position: relative;
-    top: -65px;
-    left: 50%;
-    transform: translateX(-50%);
     border-radius: 50%;
     margin-top: 20px;
-  }
-.theme_IMG_ACTIVE{
+}
+
+.theme_IMG_ACTIVE {
     position: absolute;
     width: 180px;
     top: 0px;
-  }
+}
+.preGameTimer{
+  position: absolute;
+  top: 100px;
+  z-index: 99999999;
+}
+.preGameTimer p{
+  color:red;
+}
 .clickCountInGame {
     position: relative;
     font-weight: bolder;

@@ -21,6 +21,7 @@ const FastClickMatch: React.FC<FastClickMatchProps> = ({ onGameStart }) => {
   const [gameStarted, setGameStarted] = useState(false);
   const [preGameStarted, setPreGameStarted] = useState(false);
   const [gameEnded, setGameEnded] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -85,10 +86,13 @@ const FastClickMatch: React.FC<FastClickMatchProps> = ({ onGameStart }) => {
   };
 
   const incrementYourClicks = () => {
-    if (gameStarted) {
+    if (gameStarted && !preGameStarted) {
       const newClickCount = yourClicks + 1;
       setYourClicks(newClickCount);
       socket.emit('click', { id: socket.id, clicks: newClickCount });
+      // Trigger the animation
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 1000); // Adjust the timeout to match the animation duration
     }
   };
 
@@ -118,7 +122,13 @@ const FastClickMatch: React.FC<FastClickMatchProps> = ({ onGameStart }) => {
         onClick={startGame}
       >
         <img
-          className={classNames(styles.theme_IMG, { [styles.theme_IMG_ACTIVE]: gameStarted })}
+          className={classNames(
+            styles.theme_IMG, 
+            { 
+              [styles.theme_IMG_ACTIVE]: gameStarted,
+              'animate__animated animate__headShake animate__faster': animate
+            }
+          )}
           src="/images/troll_BG.png"
           alt="beefroom_theme_img"
           onClick={incrementYourClicks}
